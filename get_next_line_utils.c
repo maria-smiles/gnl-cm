@@ -1,5 +1,5 @@
 //
-// Created by HardWorker on 01.06.2021.
+// Created by Leann Alaskan on 5/25/21.
 //
 #include "get_next_line.h"
 
@@ -66,11 +66,10 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	return (new_s);
 }
 
-void	ft_strcpy(char *dst, const char *src)
+void	ft_strcpy(char *dst, const char *src, size_t dstsize)
 {
 	size_t	i;
 	size_t	lensrc;
-	size_t	dstsize;
 
 	if (!dst || !src)
 		return;
@@ -80,7 +79,6 @@ void	ft_strcpy(char *dst, const char *src)
 		dst[0] = '\0';
 		return;
 	}
-	dstsize = ft_strlen(dst);
 	if (dstsize >= lensrc)
 	{
 		i = 0;
@@ -92,25 +90,27 @@ void	ft_strcpy(char *dst, const char *src)
 		dst[i] = '\0';
 	}
 }
-void ft_strclr(char *reminder)
+void ft_strclr(char *ost)
 {
 	size_t i;
 	size_t len;
 
 	i = 0;
-	len = ft_strlen(reminder);
+	len = ft_strlen(ost);
 	while(i < len)
 	{
-		reminder[i] = '\0';
+		ost[i] = '\0';
 		i++;
 	}
 }
 
-char *ft_strnew(size_t count)
+char *ft_clrnew(size_t count)
 {
 	char *line;
 
 	line = malloc(sizeof(char) * (count + 1));
+	if(!line)
+		return (NULL);
 	ft_strclr(line);
 	return (line);
 }

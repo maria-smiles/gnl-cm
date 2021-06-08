@@ -3,13 +3,15 @@
 #include <stdio.h>
 #include "get_next_line.h"
 
+int byte_all;
 
 int main(int argc, char **argv)
 {
 	char *line;
 	int fd;
-
+	byte_all = 0;
 	printf("argc = %d\n", argc);
+	printf("int max = %d\n", INT_MAX);
 	if (argc == 2)
 	{
 		fd = open(argv[1], O_RDONLY);
@@ -27,8 +29,43 @@ int main(int argc, char **argv)
 		return (-1);
 	}
 
-	while (get_next_line(fd, &line))
-		printf("%s\n", line);
+	printf("Buf size = %d\n", BUFFER_SIZE);
+	int r;
+
+	while ((r = get_next_line(fd, &line, &byte_all)))
+	{
+		printf("r = %d\n", r);
+		printf("New line = %s\n", line);
+		
+		/*
+		printf("New line = ");
+		size_t i = 0;
+		size_t len = ft_strlen(line);
+		while (i < len)
+		{
+			printf("%d ", line[i]);
+			i++;
+		}
+		printf("\n");
+		*/
+	}
+	printf("after while r = %d\n", r);
+	printf("New line = %s\n", line);
+
+	/*
+	printf("New line = ");
+	size_t i = 0;
+		size_t len = ft_strlen(line);
+		while (i < len)
+		{
+			printf("%d ", line[i]);
+			i++;
+		}
+printf("\n");
+	*/
+
+	printf("all bytes = %d\n", byte_all);
+
 }
 
 

@@ -29,23 +29,22 @@ char	*ft_strchr(const char *str, int c)
 	return (NULL);
 }
 
-static char *ft_newstr(char	*new_s, char const *s1, char const *s2)
+char	*ft_strjoin(char const *s1, char const *s2, int endnul)
 {
+	char	*new_s;
 	size_t	len_s1;
 	size_t	len_s2;
 	size_t	i;
 
-	i = 0;
+	if (!s1 || !s2)
+		return (0);
 	len_s1 = ft_strlen(s1);
 	len_s2 = ft_strlen(s2);
 	new_s = malloc(sizeof(char) * (len_s1 + len_s2 + 1));
 	if (!new_s)
 		return (NULL);
-	while (i < len_s1)
-	{
-		new_s[i] = s1[i];
-		i++;
-	}
+	new_s = ft_strdup(s1, endnul);
+	i = len_s1;
 	while (i < (len_s1 + len_s2))
 	{
 		new_s[i] = s2[i - len_s1];
@@ -55,29 +54,18 @@ static char *ft_newstr(char	*new_s, char const *s1, char const *s2)
 	return (new_s);
 }
 
-char	*ft_strjoin(char const *s1, char const *s2)
-{
-	char	*new_s;
-
-	if (!s1 || !s2)
-		return (0);
-	new_s = NULL;
-	new_s = ft_newstr(new_s, s1, s2);
-	return (new_s);
-}
-
 void	ft_strcpy(char *dst, const char *src, size_t dstsize)
 {
 	size_t	i;
 	size_t	lensrc;
 
 	if (!dst || !src)
-		return;
+		return ;
 	lensrc = ft_strlen(src);
 	if (lensrc == 0)
 	{
 		dst[0] = '\0';
-		return;
+		return ;
 	}
 	if (dstsize >= lensrc)
 	{
@@ -90,32 +78,8 @@ void	ft_strcpy(char *dst, const char *src, size_t dstsize)
 		dst[i] = '\0';
 	}
 }
-void ft_strclr(char *ost)
-{
-	size_t i;
-	size_t len;
 
-	i = 0;
-	len = ft_strlen(ost);
-	while(i < len)
-	{
-		ost[i] = '\0';
-		i++;
-	}
-}
-
-char *ft_clrnew(size_t count)
-{
-	char *line;
-
-	line = malloc(sizeof(char) * (count + 1));
-	if(!line)
-		return (NULL);
-	ft_strclr(line);
-	return (line);
-}
-
-char	*ft_strdup(const char *s1)
+char	*ft_strdup(const char *s1, int endnul)
 {
 	size_t	i;
 	size_t	len;
@@ -131,6 +95,7 @@ char	*ft_strdup(const char *s1)
 		s2[i] = s1[i];
 		i++;
 	}
-	s2[i] = '\0';
+	if (endnul == 0)
+		s2[i] = '\0';
 	return (&s2[0]);
 }
